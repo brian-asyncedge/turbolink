@@ -36,7 +36,7 @@ message ExternalAccountSummary
     string ProviderName = 3;
     string ProfileName = 4;
 
-    ExternalAccountSummary CentralAccountSummary = 5;
+    //ExternalAccountSummary CentralAccountSummary = 5;
 
     repeated LinkedAccountSummary LinkedAccountSummaries = 6;
 }
