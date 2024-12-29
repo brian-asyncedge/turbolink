@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package Identity;
+
+service IdentityService 
+{
+  //option (authorize_option) = "Authorize(Roles = \"Administrator\")";
+  rpc GetExternalAccountId (Empty) returns (GetExternalAccountIdReply);
+  rpc GetAccountSummary (Empty) returns (GetAccountSummaryReply);
+
+  rpc LinkAccount(LinkAccountRequest) returns (LinkAccountReply);
+  rpc UnlinkAccount(UnlinkAccountRequest) returns (UnlinkAccountReply);
+}
+
+message Empty 
+{
+}
+
+message GetExternalAccountIdReply 
+{
+  string ExternalAccountId = 1; //| Guid
+}
+
+
+message LinkedAccountSummary
+{
+    string ProviderName = 1;
+    string ExternalId = 2; //| Guid
+    string ProfileName = 3;
+}
+
+message ExternalAccountSummary 
+{
+    string ExternalId = 1; //| Guid
+    string ActiveId = 2; //| Guid
+    string ProviderName = 3;
+    string ProfileName = 4;
+
+    ExternalAccountSummary CentralAccountSummary = 5;
+
+    repeated LinkedAccountSummary LinkedAccountSummaries = 6;
+}
+
+message GetAccountSummaryReply 
+{
+    ExternalAccountSummary Summary = 1;
+}
+
+message LinkAccountRequest
+{
+    string ProviderName = 1;
+    string ProviderPayload = 2;
+}
+
+message LinkAccountReply
+{
+    bool success = 1;
+    string errorMessage = 2;
+    string externalId = 3; //| Guid
+    string activeAccountId = 4; //| Guid
+    string token = 5;
+    sfixed64 tokenExpiration = 6;
+   
+    string linkedExternalAccountId = 7;
+    string linkedAccountProfileName = 8;
+    string linkedAccountProfileProvider = 9;
+}
+
+message UnlinkAccountRequest
+{
+    string externalId = 1; //| Guid
+}
+
+message UnlinkAccountReply
+{
+    bool success = 1;
+    bool errorMessage = 2;
+    string externalId = 3; //| Guid
+    string activeAccountId = 4; //| Guid
+    string token = 5;
+    sfixed64 tokenExpiration = 6;
+}
