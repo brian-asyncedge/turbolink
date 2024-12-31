@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package TextChat;
+
+service TextChatService 
+{
+  rpc JoinTextChatChannel (JoinTextChatChannelRequest) returns (JoinTextChatChannelResponse);
+  rpc LeaveTextChatChannel (LeaveTextChatChannelRequest) returns (LeaveTextChatChannelResponse);
+
+  rpc SendTextChatMessage(SendTextChatMessageReqest) returns (SendTextChatMessageResponse);
+  rpc ReceiveTextChatMessages(Empty) returns (stream TextChatMessage);
+}
+
+message Empty
+{
+}
+
+message JoinTextChatChannelRequest 
+{
+  string ChatChannelName = 1;
+}
+
+message JoinTextChatChannelResponse 
+{
+  string ChatChannelName = 1;
+  bool Success = 2;
+  string ErrorMessage = 3;
+}
+
+message LeaveTextChatChannelRequest
+{
+    string ChatChannelName = 1;
+}
+
+message LeaveTextChatChannelResponse
+{
+    string ChatChannelName = 1;
+    bool Success = 2;
+    string ErrorMessage = 3;
+}
+
+message SendTextChatMessageReqest
+{
+    string ChatChannelName = 1;
+    string Message = 2;
+}
+
+message SendTextChatMessageResponse
+{
+    string ChatChannelName = 1;
+    bool Success = 2;
+    string ErrorMessage = 3;
+}
+
+message TextChatMessage
+{
+    string ChatChannelName = 1;
+    string FromAccountId = 2; //| Guid
+    string FromDisplayName = 3;
+    string Message = 4;
+}
