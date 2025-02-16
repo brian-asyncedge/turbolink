@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package UserConnection;
+
+service UserConnectionService 
+{
+  rpc ConnectUser(Empty) returns (stream ConnectionMessage);
+}
+
+message Empty
+{
+}
+
+message ConnectionMessage 
+{
+  string Message = 2;
+}
