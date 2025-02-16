@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package Matchmaking;
+
+
+service MatchmakingService
+{
+  rpc ConnectToMatchmakingStream(MatchmakingStreamConnectRequest) returns (stream MatchmakingStream);
+  
+  rpc FindMatch(FindMatchRequest) returns (FindMatchResponse);
+}
+
+message MatchmakingStreamConnectRequest
+{
+}
+
+message MatchmakingStream
+{
+  string Command = 1;
+  string Parameter = 2;
+}
+
+message MatchRequestParameter
+{
+  string ParameterName = 2;
+  repeated string ParameterValues = 3;
+}
+
+message FindMatchRequest
+{
+  string QueueName = 1;
+  repeated MatchRequestParameter RequestParameters = 2;
+}
+
+message FindMatchResponse
+{
+  bool Success = 1;
+  string MatchmakingId = 2; //| Guid
+}
